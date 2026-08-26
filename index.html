@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cadastro de documentos</title>
-<meta name="description" content="Formulário de cadastro dos dados do documento.">
+<title>Validador de documentos</title>
+<meta name="description" content="Digite o código de autenticação impresso no documento e visualize sua autenticidade.">
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
           <path d="M9 12.2l2.1 2.1L15.4 10"></path>
         </svg>
       </span>
-      <span class="marca__texto">Cadastro de documentos</span>
+      <span class="marca__texto">Validador de documentos</span>
     </a>
   </div>
 </header>
@@ -27,59 +27,49 @@
 <main class="container principal">
 
   <section class="hero">
-    <h1>Dados do documento</h1>
+    <h1>Validador de documentos</h1>
     <p class="hero__texto">
-      Preencha os campos abaixo com os dados que serão impressos no documento.
+      Aqui você poderá digitar o código de autenticação impresso em nossos
+      documentos e visualizar sua autenticidade.
     </p>
   </section>
 
   <section class="cartao" aria-labelledby="titulo-form">
-    <h2 id="titulo-form" class="cartao__titulo">Informações do aluno</h2>
+    <h2 id="titulo-form" class="cartao__titulo">Código de autenticação</h2>
 
-    <form class="formulario" id="form-dados" novalidate>
-
-      <div class="grade">
-
-        <div class="grupo grupo--largo">
-          <label class="rotulo" for="nome">Nome</label>
-          <input class="campo__entrada" type="text" id="nome" name="nome"
-                 placeholder="Nome completo" autocomplete="off" autofocus>
-        </div>
-
-        <div class="grupo grupo--largo">
-          <label class="rotulo" for="curso">Curso</label>
-          <input class="campo__entrada" type="text" id="curso" name="curso"
-                 placeholder="Nome do curso" autocomplete="off">
-        </div>
-
-        <div class="grupo">
-          <label class="rotulo" for="matricula">Matrícula</label>
-          <input class="campo__entrada campo__entrada--mono" type="text"
-                 id="matricula" name="matricula" inputmode="numeric"
-                 placeholder="00000000000" autocomplete="off" spellcheck="false">
-        </div>
-
-        <div class="grupo">
-          <label class="rotulo" for="cpf">CPF</label>
-          <input class="campo__entrada campo__entrada--mono" type="text"
-                 id="cpf" name="cpf" inputmode="numeric"
-                 placeholder="000.000.000-00" autocomplete="off" spellcheck="false">
-        </div>
-
+    <form class="formulario" id="form-validacao" novalidate>
+      <label class="rotulo" for="codigo">Informe o código</label>
+      <div class="campo">
+        <input class="campo__entrada"
+               type="text"
+               id="codigo"
+               name="codigo"
+               placeholder="Ex.: A1B2-C3D4-E5F6"
+               autocomplete="off"
+               spellcheck="false"
+               aria-describedby="ajuda-codigo"
+               autofocus>
+        <button class="botao" type="submit">Validar</button>
       </div>
-
-      <div class="acoes">
-        <button class="botao botao--ok" type="submit">
-          <span class="botao__marca" aria-hidden="true">OK</span>
-          <span>Teste Teste</span>
-        </button>
-      </div>
-
+      <p class="ajuda" id="ajuda-codigo">
+        Não diferencia maiúsculas de minúsculas; hífens e espaços são ignorados.
+      </p>
     </form>
   </section>
 
-  <!-- Confirmação inserida pelo JavaScript -->
+  <!-- O resultado da validação é inserido aqui pelo JavaScript -->
   <div id="resultado" aria-live="polite"></div>
+
+  <section class="nota">
+    <h2 class="nota__titulo">Códigos de demonstração</h2>
+    <p>Base de teste com dados fictícios. Experimente:</p>
+    <ul class="nota__lista">
+      <li><code>A1B2-C3D4-E5F6</code> — documento válido</li>
+      <li><code>9F8E-7D6C-5B4A</code> — válido, sem prazo de validade</li>
+      <li><code>1234-5678-90AB</code> — fora do prazo</li>
+      <li><code>DEAD-BEEF-0001</code> — cancelado</li>
+    </ul>
+  </section>
 
 </main>
 
@@ -90,6 +80,7 @@
   </div>
 </footer>
 
+<script src="js/documentos.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>
