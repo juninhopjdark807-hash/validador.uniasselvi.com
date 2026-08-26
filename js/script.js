@@ -9,10 +9,21 @@
   var MAX_CARACTERES = 24;
   var MIN_CARACTERES = 6;
 
-  var entrada   = document.getElementById("codigo");
+  var entrada    = document.getElementById("codigo");
   var formulario = document.getElementById("form-validacao");
-  var saida     = document.getElementById("resultado");
-  var campoAno  = document.getElementById("ano");
+  var saida      = document.getElementById("resultado");
+  var campoAno   = document.getElementById("ano");
+
+  /* Se a página não tiver os elementos esperados (por exemplo, um script
+     antigo em cache rodando sobre um HTML novo), interrompe sem quebrar
+     o restante da página. */
+  if (!entrada || !formulario || !saida) {
+    if (window.console) {
+      console.warn("Validador: elementos do formulário não encontrados. " +
+                   "Recarregue a página com Ctrl+F5 para limpar o cache.");
+    }
+    return;
+  }
 
   if (campoAno) campoAno.textContent = new Date().getFullYear();
 
