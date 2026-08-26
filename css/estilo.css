@@ -7,6 +7,7 @@
   --azul-escuro: #0b3260;
   --azul-claro: #e8f0fa;
   --verde: #1a7f4b;
+  --verde-escuro: #14653b;
   --verde-fundo: #e7f6ee;
   --ambar: #9a6400;
   --ambar-fundo: #fdf3e0;
@@ -117,6 +118,18 @@ body {
   margin-bottom: 6px;
 }
 
+/* Grade dos campos: 2 colunas no desktop, 1 no celular. */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+.grupo { display: flex; flex-direction: column; }
+
+/* Nome e Curso ocupam a linha inteira. */
+.grupo--largo { grid-column: 1 / -1; }
+
 .campo {
   display: flex;
   gap: 10px;
@@ -124,12 +137,11 @@ body {
 }
 
 .campo__entrada {
-  flex: 1 1 260px;
+  width: 100%;
   min-width: 0;
   padding: 12px 14px;
   font-size: 1rem;
-  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-  letter-spacing: 1px;
+  font-family: inherit;
   color: var(--texto);
   background: var(--branco);
   border: 1.5px solid var(--borda);
@@ -143,11 +155,28 @@ body {
   box-shadow: 0 0 0 3px rgba(16, 69, 127, .15);
 }
 
+/* Campos numéricos (Matrícula e CPF) em fonte monoespaçada. */
+.campo__entrada--mono {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 1px;
+}
+
+.acoes {
+  display: flex;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--borda);
+}
+
 .botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   flex: 0 0 auto;
   padding: 12px 26px;
   font-size: 1rem;
   font-weight: 600;
+  font-family: inherit;
   color: var(--branco);
   background: var(--azul);
   border: none;
@@ -161,6 +190,25 @@ body {
 .botao:focus-visible {
   outline: 3px solid rgba(16, 69, 127, .35);
   outline-offset: 2px;
+}
+
+/* Botão verde de confirmação. */
+.botao--ok { background: var(--verde); }
+.botao--ok:hover { background: var(--verde-escuro); }
+.botao--ok:focus-visible { outline-color: rgba(26, 127, 75, .4); }
+
+/* Selo "OK" dentro do botão. */
+.botao__marca {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  padding: 2px 7px;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .5px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .22);
 }
 
 .ajuda {
@@ -284,7 +332,12 @@ body {
 .rodape__aviso { color: rgba(255, 255, 255, .6); margin-top: 4px; }
 
 /* ---------------------------------------------------------------- Mobile */
+@media (max-width: 620px) {
+  .grade { grid-template-columns: minmax(0, 1fr); }
+}
+
 @media (max-width: 520px) {
   .cartao, .resultado { padding: 18px; }
-  .botao { width: 100%; }
+  .acoes { display: block; }
+  .botao { width: 100%; justify-content: center; }
 }

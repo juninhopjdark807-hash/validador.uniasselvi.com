@@ -1,14 +1,13 @@
-# Validador de Documentos
+# Cadastro de Documentos
 
-Site estático (**HTML + CSS + JavaScript**) para conferir a autenticidade de um
-documento a partir do seu código de autenticação: digite o código impresso no
-documento e a página informa se ele é autêntico, exibindo os dados do registro.
+Site estático (**HTML + CSS + JavaScript**) com um formulário para informar os
+dados que serão impressos no documento: Nome, Curso, Matrícula e CPF.
 
 Sem Python, sem servidor, sem build e sem dependências externas — basta abrir o
 `index.html` no navegador.
 
-> Projeto de uso pessoal/interno, escrito do zero. Os dados são fictícios e não
-> há vínculo com nenhuma instituição de ensino.
+> Projeto de uso pessoal/interno, escrito do zero. Dados fictícios, sem vínculo
+> com nenhuma instituição de ensino.
 
 ## Como usar
 
@@ -21,74 +20,42 @@ python3 -m http.server 8000
 # abra http://localhost:8000
 ```
 
-## Funcionalidades
+## O formulário
 
-- Busca do documento pelo código de autenticação
-- Entrada tolerante: ignora hífens, pontos, espaços e maiúsculas/minúsculas —
-  `a1b2c3d4e5f6`, `A1B2-C3D4-E5F6` e `A1B2 C3D4 E5F6` chegam ao mesmo registro
-- Máscara automática no campo (blocos de 4 caracteres)
-- Ao colar um código de um PDF, quebras de linha e espaços são removidos
-- Link direto com validação automática: `index.html?codigo=A1B2C3D4E5F6`
-- Layout responsivo (desktop e celular)
-
-## Resultados possíveis
-
-| Situação | Quando ocorre | Cor |
-|---|---|---|
-| Documento autêntico | encontrado e dentro do prazo | verde |
-| Fora do prazo de validade | encontrado, mas vencido | âmbar |
-| Documento cancelado | marcado como revogado | vermelho |
-| Não localizado | nenhum registro para o código | vermelho |
-| Código inválido | menos de 6 caracteres | âmbar |
-
-## Códigos de demonstração
-
-| Código | Resultado |
+| Campo | Observação |
 |---|---|
-| `A1B2-C3D4-E5F6` | válido |
-| `9F8E-7D6C-5B4A` | válido, sem prazo de validade |
-| `1234-5678-90AB` | fora do prazo |
-| `DEAD-BEEF-0001` | cancelado |
+| Nome | texto livre, ocupa a linha inteira |
+| Curso | texto livre, ocupa a linha inteira |
+| Matrícula | aceita apenas números (até 15 dígitos) |
+| CPF | aceita apenas números, com máscara `000.000.000-00` |
+
+O botão de confirmação é verde, traz o selo **OK** e o texto **Teste Teste**.
+Ao clicar, os dados preenchidos são exibidos logo abaixo em um painel de
+confirmação. Campos deixados em branco aparecem como `—`.
 
 ## Estrutura
 
 ```
 .
-├── index.html            página
+├── index.html          formulário
 ├── css/
-│   └── estilo.css        aparência
+│   └── estilo.css      aparência
 └── js/
-    ├── documentos.js     BASE DE DOCUMENTOS (edite aqui)
-    └── script.js         lógica da validação
+    └── script.js       máscaras e exibição dos dados
 ```
 
-## Cadastrando documentos
+## Personalização rápida
 
-Abra **`js/documentos.js`** e acrescente um bloco na lista:
+- **Texto ou cor do botão:** o texto está no `index.html`; a cor vem da regra
+  `.botao--ok` no `css/estilo.css` (variáveis `--verde` e `--verde-escuro`,
+  definidas no topo do arquivo).
+- **Novos campos:** duplique um bloco `.grupo` no `index.html` e acrescente a
+  linha correspondente na função `exibir()` do `js/script.js`.
+- **Layout:** os campos ficam em duas colunas no desktop e em uma no celular.
+  Use a classe `grupo--largo` para um campo ocupar a linha inteira.
 
-```js
-{
-  codigo: "AAAA-BBBB-CCCC",
-  tipo: "Declaração de Matrícula",
-  nome: "Nome da Pessoa",
-  matricula: "00000000000",
-  curso: "Nome do Curso",
-  unidade: "Polo — Cidade/UF",
-  emitidoEm: "2026-01-15",
-  validoAte: "2026-07-15",
-  emissor: "Secretaria Acadêmica",
-  cancelado: false
-}
-```
+## Observação
 
-- `validoAte: null` → documento sem prazo de validade
-- `cancelado: true` → documento revogado
-- Datas no formato `AAAA-MM-DD`
-- Separe cada bloco com vírgula
-
-## Observação sobre segurança
-
-Por ser um site estático, a base de documentos fica em um arquivo `.js` visível
-para quem abrir a página. Isso é adequado para uso pessoal e interno, mas se um
-dia for publicado na internet, a validação deve passar a ser feita em um
-servidor.
+Os dados preenchidos apenas são exibidos na tela — nada é salvo ou enviado a
+lugar nenhum. Ao recarregar a página, o formulário volta em branco. Se for
+preciso armazenar os registros, será necessário adicionar um backend.
