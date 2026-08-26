@@ -17,7 +17,6 @@ var DOCUMENTOS = [
     unidade: "Polo - Arthur Nogueira",
     emitidoEm: "2026-03-14",
     validoAte: "2026-12-14",
-    emissor: "Secretaria Acadêmica",
     cancelado: false
   },
   {
@@ -29,7 +28,6 @@ var DOCUMENTOS = [
     unidade: "Polo Norte — Joinville/SC",
     emitidoEm: "2025-11-02",
     validoAte: null,
-    emissor: "Secretaria Acadêmica",
     cancelado: false
   },
   {
@@ -41,7 +39,6 @@ var DOCUMENTOS = [
     unidade: "Polo Sul — Florianópolis/SC",
     emitidoEm: "2024-07-30",
     validoAte: "2025-07-30",
-    emissor: "Registro Acadêmico",
     cancelado: false
   },
   {
@@ -53,7 +50,6 @@ var DOCUMENTOS = [
     unidade: "Polo Leste — Itajaí/SC",
     emitidoEm: "2026-01-20",
     validoAte: "2026-12-20",
-    emissor: "Secretaria Acadêmica",
     cancelado: true
   }
 ];

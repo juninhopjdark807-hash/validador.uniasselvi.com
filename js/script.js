@@ -95,7 +95,7 @@
     if (codigo.length < MIN_CARACTERES) {
       return {
         status: "invalido",
-        codigo: agrupar(codigo),
+        codigo: (codigo),
         mensagem: "O código informado é curto demais para ser válido. " +
                   "Confira os caracteres e tente novamente."
       };
@@ -106,7 +106,7 @@
     if (!doc) {
       return {
         status: "nao_encontrado",
-        codigo: agrupar(codigo),
+        codigo: (codigo),
         mensagem: "Nenhum documento foi localizado para este código de " +
                   "autenticação. Verifique a digitação — se o problema " +
                   "persistir, procure a secretaria da sua unidade."
@@ -116,7 +116,7 @@
     if (doc.cancelado) {
       return {
         status: "cancelado",
-        codigo: agrupar(codigo),
+        codigo: (codigo),
         documento: doc,
         mensagem: "Este documento foi cancelado pela instituição emissora " +
                   "e não possui validade."
@@ -126,7 +126,7 @@
     if (estaVencido(doc.validoAte)) {
       return {
         status: "expirado",
-        codigo: agrupar(codigo),
+        codigo: (codigo),
         documento: doc,
         mensagem: "O prazo de validade deste documento já se encerrou."
       };
@@ -134,7 +134,7 @@
 
     return {
       status: "valido",
-      codigo: agrupar(codigo),
+      codigo: (codigo),
       documento: doc,
       mensagem: "Documento autêntico. Os dados abaixo conferem com o " +
                 "registro da instituição emissora."
@@ -164,9 +164,7 @@
       linha("Matrícula", d.matricula) +
       linha("Curso", d.curso) +
       linha("Unidade", d.unidade) +
-      linha("Emitido em", formatarData(d.emitidoEm)) +
       linha("Válido até", d.validoAte ? formatarData(d.validoAte) : "Sem prazo de validade") +
-      linha("Emitido por", d.emissor) +
       "</dl>";
   }
 
@@ -195,7 +193,7 @@
   /* Máscara: agrupa em blocos de 4 enquanto digita. */
   entrada.addEventListener("input", function () {
     var noFinal = entrada.selectionStart === entrada.value.length;
-    entrada.value = agrupar(normalizar(entrada.value));
+    entrada.value = normalizar(entrada.value);
     if (noFinal) {
       entrada.selectionStart = entrada.selectionEnd = entrada.value.length;
     }
@@ -205,7 +203,7 @@
   entrada.addEventListener("paste", function (evento) {
     evento.preventDefault();
     var texto = (evento.clipboardData || window.clipboardData).getData("text");
-    entrada.value = agrupar(normalizar(texto));
+    entrada.value = (normalizar(texto));
   });
 
   entrada.addEventListener("focus", function () {
@@ -217,7 +215,7 @@
   (function preencherPelaURL() {
     var busca = window.location.search.match(/[?&]codigo=([^&]*)/);
     if (!busca) return;
-    entrada.value = agrupar(normalizar(decodeURIComponent(busca[1])));
+    entrada.value = (normalizar(decodeURIComponent(busca[1])));
     exibir(validar(entrada.value));
   })();
 })();

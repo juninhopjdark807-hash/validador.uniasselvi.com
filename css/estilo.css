@@ -3,8 +3,8 @@
    ========================================================================== */
 
 :root {
-  --azul: #10457f;
-  --azul-escuro: #0b3260;
+  --azul: #1D1934;
+  --azul-escuro: #1D1934;
   --azul-claro: #e8f0fa;
   --verde: #1a7f4b;
   --verde-fundo: #e7f6ee;
@@ -55,6 +55,7 @@ body {
 .topo__conteudo {
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 66px;
 }
 
@@ -74,6 +75,13 @@ body {
   display: block;
 }
 
+.marca__texto {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--branco);
+  text-align: center;
+}
+
 /* ---------------------------------------------------------------- Conteúdo */
 .principal {
   flex: 1;
@@ -88,12 +96,14 @@ body {
   font-size: clamp(1.6rem, 4vw, 2.1rem);
   color: var(--azul-escuro);
   line-height: 1.25;
+  text-align: center;
 }
 
 .hero__texto {
-  margin: 0;
+  margin: 0 auto;
   max-width: 62ch;
   color: var(--texto-suave);
+  text-align: center;
 }
 
 /* ------------------------------------------------------------------ Cartão */
