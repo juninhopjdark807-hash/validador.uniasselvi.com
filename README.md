@@ -1,45 +1,49 @@
-# ProjetoPessoal — Validador de Documentos
+# Validador de Documentos
 
-Aplicação web em **Python + Flask** para conferir a autenticidade de um
-documento a partir do seu código de autenticação: o usuário digita o código
-impresso no documento e o sistema informa se ele é autêntico, exibindo os
-dados do registro.
+Site estático (**HTML + CSS + JavaScript**) para conferir a autenticidade de um
+documento a partir do seu código de autenticação: digite o código impresso no
+documento e a página informa se ele é autêntico, exibindo os dados do registro.
 
-> Implementação **original**, escrita do zero como projeto de estudo.
-> Os dados são fictícios e a aplicação não possui vínculo com nenhuma
-> instituição de ensino.
+Sem Python, sem servidor, sem build e sem dependências externas — basta abrir o
+`index.html` no navegador.
+
+> Projeto de uso pessoal/interno, escrito do zero. Os dados são fictícios e não
+> há vínculo com nenhuma instituição de ensino.
+
+## Como usar
+
+Dê duplo clique em **`index.html`**. É só isso.
+
+Se preferir servir por HTTP (opcional):
+
+```bash
+python3 -m http.server 8000
+# abra http://localhost:8000
+```
 
 ## Funcionalidades
 
-- Busca de documento pelo código de autenticação
-- Normalização da entrada: ignora hífens, espaços, pontos e maiúsculas/minúsculas
-- Máscara automática no campo (blocos de 4 caracteres) e tratamento de colagem
-- Cinco desfechos distintos de validação:
-  | Situação | Descrição |
-  |---|---|
-  | `valido` | documento encontrado e dentro do prazo |
-  | `expirado` | documento encontrado, prazo de validade vencido |
-  | `cancelado` | documento revogado pela emissora |
-  | `nao_encontrado` | nenhum registro para o código |
-  | `invalido` | código curto demais para ser válido |
-- Endpoint JSON `GET /api/validar?codigo=...` para integrações
-- Layout responsivo, sem dependências de front-end
+- Busca do documento pelo código de autenticação
+- Entrada tolerante: ignora hífens, pontos, espaços e maiúsculas/minúsculas —
+  `a1b2c3d4e5f6`, `A1B2-C3D4-E5F6` e `A1B2 C3D4 E5F6` chegam ao mesmo registro
+- Máscara automática no campo (blocos de 4 caracteres)
+- Ao colar um código de um PDF, quebras de linha e espaços são removidos
+- Link direto com validação automática: `index.html?codigo=A1B2C3D4E5F6`
+- Layout responsivo (desktop e celular)
 
-## Como executar
+## Resultados possíveis
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-python app.py
-```
-
-Acesse <http://localhost:5000>. A porta pode ser alterada pela variável de
-ambiente `PORT`.
+| Situação | Quando ocorre | Cor |
+|---|---|---|
+| Documento autêntico | encontrado e dentro do prazo | verde |
+| Fora do prazo de validade | encontrado, mas vencido | âmbar |
+| Documento cancelado | marcado como revogado | vermelho |
+| Não localizado | nenhum registro para o código | vermelho |
+| Código inválido | menos de 6 caracteres | âmbar |
 
 ## Códigos de demonstração
 
-| Código | Resultado esperado |
+| Código | Resultado |
 |---|---|
 | `A1B2-C3D4-E5F6` | válido |
 | `9F8E-7D6C-5B4A` | válido, sem prazo de validade |
@@ -50,34 +54,41 @@ ambiente `PORT`.
 
 ```
 .
-├── app.py                    # rotas e regras de validação
-├── requirements.txt
-├── data/
-│   └── documentos.json       # base de documentos (fictícia)
-├── templates/
-│   └── index.html
-└── static/
-    ├── css/estilo.css
-    └── js/script.js
+├── index.html            página
+├── css/
+│   └── estilo.css        aparência
+└── js/
+    ├── documentos.js     BASE DE DOCUMENTOS (edite aqui)
+    └── script.js         lógica da validação
 ```
 
-## Como cadastrar novos documentos
+## Cadastrando documentos
 
-Basta acrescentar um objeto em `data/documentos.json`:
+Abra **`js/documentos.js`** e acrescente um bloco na lista:
 
-```json
+```js
 {
-  "codigo": "AAAA-BBBB-CCCC",
-  "tipo": "Declaração de Matrícula",
-  "aluno": "Nome do Aluno",
-  "matricula": "00000000000",
-  "curso": "Nome do Curso",
-  "unidade": "Polo — Cidade/UF",
-  "emitido_em": "2026-01-15",
-  "valido_ate": "2026-07-15",
-  "emissor": "Secretaria Acadêmica",
-  "cancelado": false
+  codigo: "AAAA-BBBB-CCCC",
+  tipo: "Declaração de Matrícula",
+  nome: "Nome da Pessoa",
+  matricula: "00000000000",
+  curso: "Nome do Curso",
+  unidade: "Polo — Cidade/UF",
+  emitidoEm: "2026-01-15",
+  validoAte: "2026-07-15",
+  emissor: "Secretaria Acadêmica",
+  cancelado: false
 }
 ```
 
-Use `"valido_ate": null` para documentos sem prazo de validade.
+- `validoAte: null` → documento sem prazo de validade
+- `cancelado: true` → documento revogado
+- Datas no formato `AAAA-MM-DD`
+- Separe cada bloco com vírgula
+
+## Observação sobre segurança
+
+Por ser um site estático, a base de documentos fica em um arquivo `.js` visível
+para quem abrir a página. Isso é adequado para uso pessoal e interno, mas se um
+dia for publicado na internet, a validação deve passar a ser feita em um
+servidor.

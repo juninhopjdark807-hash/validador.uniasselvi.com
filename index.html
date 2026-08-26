@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Validador de documentos</title>
+<meta name="description" content="Digite o código de autenticação impresso no documento e visualize sua autenticidade.">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="container topo__conteudo">
+    <a class="marca" href="index.html">
+      <span class="marca__icone" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7.5 3.2v5.1c0 4.4-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.3-7.5-9.7V6.2z"></path>
+          <path d="M9 12.2l2.1 2.1L15.4 10"></path>
+        </svg>
+      </span>
+      <span class="marca__texto">Validador de documentos</span>
+    </a>
+  </div>
+</header>
+
+<main class="container principal">
+
+  <section class="hero">
+    <h1>Validador de documentos</h1>
+    <p class="hero__texto">
+      Aqui você poderá digitar o código de autenticação impresso em nossos
+      documentos e visualizar sua autenticidade.
+    </p>
+  </section>
+
+  <section class="cartao" aria-labelledby="titulo-form">
+    <h2 id="titulo-form" class="cartao__titulo">Código de autenticação</h2>
+
+    <form class="formulario" id="form-validacao" novalidate>
+      <label class="rotulo" for="codigo">Informe o código</label>
+      <div class="campo">
+        <input class="campo__entrada"
+               type="text"
+               id="codigo"
+               name="codigo"
+               placeholder="Ex.: A1B2-C3D4-E5F6"
+               autocomplete="off"
+               spellcheck="false"
+               aria-describedby="ajuda-codigo"
+               autofocus>
+        <button class="botao" type="submit">Validar</button>
+      </div>
+      <p class="ajuda" id="ajuda-codigo">
+        Não diferencia maiúsculas de minúsculas; hífens e espaços são ignorados.
+      </p>
+    </form>
+  </section>
+
+  <!-- O resultado da validação é inserido aqui pelo JavaScript -->
+  <div id="resultado" aria-live="polite"></div>
+
+  <section class="nota">
+    <h2 class="nota__titulo">Códigos de demonstração</h2>
+    <p>Base de teste com dados fictícios. Experimente:</p>
+    <ul class="nota__lista">
+      <li><code>A1B2-C3D4-E5F6</code> — documento válido</li>
+      <li><code>9F8E-7D6C-5B4A</code> — válido, sem prazo de validade</li>
+      <li><code>1234-5678-90AB</code> — fora do prazo</li>
+      <li><code>DEAD-BEEF-0001</code> — cancelado</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <div class="container">
+    <p>Projeto pessoal de estudo &middot; <span id="ano">2026</span></p>
+    <p class="rodape__aviso">Uso interno. Dados fictícios, sem vínculo com qualquer instituição de ensino.</p>
+  </div>
+</footer>
+
+<script src="js/documentos.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
