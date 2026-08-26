@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validador de documentos</title>
+  <meta name="description" content="Digite o código de autenticação impresso no documento e confira sua autenticidade.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo__conteudo">
+      <a class="marca" href="{{ url_for('index') }}">
+        <span class="marca__icone" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l7.5 3.2v5.1c0 4.4-3.1 8.4-7.5 9.7-4.4-1.3-7.5-5.3-7.5-9.7V6.2z"></path>
+            <path d="M9 12.2l2.1 2.1L15.4 10"></path>
+          </svg>
+        </span>
+        <span class="marca__texto">Validador de documentos</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container principal">
+
+    <section class="hero">
+      <h1>Validador de documentos</h1>
+      <p class="hero__texto">
+        Digite abaixo o código de autenticação impresso no documento para
+        visualizar os dados do registro e confirmar sua autenticidade.
+      </p>
+    </section>
+
+    <section class="cartao" aria-labelledby="titulo-form">
+      <h2 id="titulo-form" class="cartao__titulo">Código de autenticação</h2>
+
+      <form class="formulario" method="post" action="{{ url_for('index') }}" novalidate>
+        <label class="rotulo" for="codigo">Informe o código</label>
+        <div class="campo">
+          <input
+            class="campo__entrada"
+            type="text"
+            id="codigo"
+            name="codigo"
+            value="{{ codigo }}"
+            placeholder="Ex.: A1B2-C3D4-E5F6"
+            autocomplete="off"
+            spellcheck="false"
+            autofocus>
+          <button class="botao" type="submit">Validar</button>
+        </div>
+        <p class="ajuda">
+          Não diferencia maiúsculas de minúsculas; hífens e espaços são ignorados.
+        </p>
+      </form>
+    </section>
+
+    {% if resultado %}
+      {% set st = resultado.status %}
+      {% set classe = 'ok' if st == 'valido' else ('alerta' if st in ['expirado', 'invalido'] else 'erro') %}
+
+      <section class="resultado resultado--{{ classe }}" aria-live="polite">
+        <div class="resultado__cabecalho">
+          <span class="selo selo--{{ classe }}">
+            {% if st == 'valido' %}Documento autêntico
+            {% elif st == 'expirado' %}Fora do prazo de validade
+            {% elif st == 'cancelado' %}Documento cancelado
+            {% elif st == 'invalido' %}Código inválido
+            {% else %}Não localizado{% endif %}
+          </span>
+          {% if resultado.codigo %}
+            <code class="resultado__codigo">{{ resultado.codigo }}</code>
+          {% endif %}
+        </div>
+
+        <p class="resultado__mensagem">{{ resultado.mensagem }}</p>
+
+        {% if resultado.documento %}
+          {% set d = resultado.documento %}
+          <dl class="dados">
+            <div class="dados__item">
+              <dt>Tipo de documento</dt>
+              <dd>{{ d.tipo }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Nome</dt>
+              <dd>{{ d.aluno }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Matrícula</dt>
+              <dd>{{ d.matricula }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Curso</dt>
+              <dd>{{ d.curso }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Unidade</dt>
+              <dd>{{ d.unidade }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Emitido em</dt>
+              <dd>{{ formatar_data(d.emitido_em) }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Válido até</dt>
+              <dd>{{ formatar_data(d.valido_ate) if d.valido_ate else 'Sem prazo de validade' }}</dd>
+            </div>
+            <div class="dados__item">
+              <dt>Emitido por</dt>
+              <dd>{{ d.emissor }}</dd>
+            </div>
+          </dl>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    <section class="nota">
+      <h2 class="nota__titulo">Códigos de demonstração</h2>
+      <p>Este é um projeto de estudo com dados fictícios. Experimente:</p>
+      <ul class="nota__lista">
+        <li><code>A1B2-C3D4-E5F6</code> — documento válido</li>
+        <li><code>9F8E-7D6C-5B4A</code> — válido, sem prazo de validade</li>
+        <li><code>1234-5678-90AB</code> — fora do prazo</li>
+        <li><code>DEAD-BEEF-0001</code> — cancelado</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p>Projeto pessoal de estudo &middot; {{ ano }}</p>
+      <p class="rodape__aviso">
+        Dados fictícios, sem vínculo com qualquer instituição de ensino.
+      </p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+</html>

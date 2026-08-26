@@ -1,0 +1,50 @@
+[
+  {
+    "codigo": "A1B2-C3D4-E5F6",
+    "tipo": "Declaração de Matrícula",
+    "aluno": "Mariana Alves de Souza",
+    "matricula": "20231045782",
+    "curso": "Análise e Desenvolvimento de Sistemas",
+    "unidade": "Polo Centro — Blumenau/SC",
+    "emitido_em": "2026-03-14",
+    "valido_ate": "2026-09-14",
+    "emissor": "Secretaria Acadêmica",
+    "cancelado": false
+  },
+  {
+    "codigo": "9F8E-7D6C-5B4A",
+    "tipo": "Histórico Escolar",
+    "aluno": "Carlos Eduardo Ramos",
+    "matricula": "20219933110",
+    "curso": "Pedagogia",
+    "unidade": "Polo Norte — Joinville/SC",
+    "emitido_em": "2025-11-02",
+    "valido_ate": null,
+    "emissor": "Secretaria Acadêmica",
+    "cancelado": false
+  },
+  {
+    "codigo": "1234-5678-90AB",
+    "tipo": "Certificado de Conclusão",
+    "aluno": "Fernanda Lima Barreto",
+    "matricula": "20185512004",
+    "curso": "Administração",
+    "unidade": "Polo Sul — Florianópolis/SC",
+    "emitido_em": "2024-07-30",
+    "valido_ate": "2025-07-30",
+    "emissor": "Registro Acadêmico",
+    "cancelado": false
+  },
+  {
+    "codigo": "DEAD-BEEF-0001",
+    "tipo": "Declaração de Frequência",
+    "aluno": "Roberto Nunes Pacheco",
+    "matricula": "20240087651",
+    "curso": "Engenharia de Software",
+    "unidade": "Polo Leste — Itajaí/SC",
+    "emitido_em": "2026-01-20",
+    "valido_ate": "2026-12-20",
+    "emissor": "Secretaria Acadêmica",
+    "cancelado": true
+  }
+]
