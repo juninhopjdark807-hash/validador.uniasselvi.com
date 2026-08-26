@@ -35,6 +35,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+   text-align: center;
 }
 
 .container {
@@ -77,6 +78,7 @@ body {
 .principal {
   flex: 1;
   padding-block: 36px 56px;
+   text-align: center;
 }
 
 .hero { margin-bottom: 26px; }
@@ -278,6 +280,7 @@ body {
   color: rgba(255, 255, 255, .85);
   padding: 20px 0;
   font-size: .85rem;
+   text-align: center;
 }
 
 .rodape p { margin: 0; }
