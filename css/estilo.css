@@ -226,7 +226,8 @@ body {
 
 .resultado__mensagem {
   margin: 0;
-  max-width: 66ch;
+  max-width: 80ch;
+  text-wrap: balance
 }
 
 /* ------------------------------------------------------------ Lista dados */
